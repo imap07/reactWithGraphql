@@ -1,0 +1,38 @@
+query getUser($id: String, $title: String){
+    user(id: $id, title: $title){
+        status
+        data{
+            id
+        }
+        error
+    }
+}
+
+query getUsers(
+    $pag: Int = 0
+    $num: Int = 20
+    $ord: String = "updatedAt"
+    $asc: Boolean = false
+    $query:String
+){
+    users(
+        pag: $pag
+        num: $num
+        ord: $ord
+        asc: $asc
+        filter:{
+            query :$query
+        }
+    ){
+        status
+        totalEdges
+        totalCount
+        edges{
+            node{
+                id
+                name
+                email
+            }
+        }
+    }
+}

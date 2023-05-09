@@ -1,0 +1,98 @@
+query event($id: String, $title: String){
+    event(id: $id, title: $title){
+        status
+        data{
+            id
+        }
+        error
+    }
+}
+
+query getEvents(
+    $pag: Int = 0
+    $num: Int = 20
+    $ord: String = "updatedAt"
+    $asc: Boolean = false
+    $query:String
+){
+    events(
+        pag: $pag
+        num: $num
+        ord: $ord
+        asc: $asc
+        filter:{
+            query :$query
+        }
+    ){
+        status
+        totalEdges
+        totalCount
+        edges{
+            node{
+                id
+                title
+                description
+                start_time
+                end_time
+                location
+                createdAt
+                updatedAt
+            }
+        }
+    }
+}
+
+query getUsersEvents($eventId: ID! ){
+    usersEvent(eventId: $eventId){
+        data{
+        userEvent{
+            status
+            user{
+            id
+            name
+            email
+            }
+        }
+        event{
+            id
+            title
+        }
+        }
+        status
+        error
+    }
+}
+
+
+
+mutation createEvent($title: String, $description: String, $start_time: Date, $end_time: Date, $location: String){
+    createEvent(input:{
+        title: $title
+        description: $description
+        start_time: $start_time
+        end_time: $end_time
+        location: $location
+    }){
+        status
+        data{
+            id
+            title
+            description
+            start_time
+            end_time
+            location
+        }
+        error
+    }
+}
+
+mutation addUserEvent($userId: ID!, $eventId: ID!){
+    addUserEvent(
+        userId: $userId
+        eventId: $eventId
+    ){
+        status
+        error
+        data
+    }
+}

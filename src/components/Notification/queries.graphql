@@ -1,0 +1,29 @@
+query userEvents($userId: ID!){
+    userEvents(userId: $userId){
+        data{
+            event{
+                id
+                title
+                description
+                location
+                start_time
+                end_time
+            }
+            status
+        }
+        error
+        status
+    }
+}
+
+mutation updateUserEvent($userId: ID!, $eventId: ID!, $status: String!){
+    updateUserEvent(
+        userId: $userId
+        eventId: $eventId
+        status: $status
+    ){
+        status
+        data
+        error
+    }
+}
